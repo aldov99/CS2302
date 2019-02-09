@@ -1,0 +1,80 @@
+#CS 2302
+#Aldo Venzor
+#Lab 1
+#Olac Fuentes
+#Anindita Nath
+#02/08/19
+#The purpose of this program is to plot some images using recursive methods
+
+import matplotlib.pyplot as plt
+import numpy as np
+import math 
+
+
+#image 2: Circles in the left side
+def circle(center,rad):
+    n = int(4*rad*math.pi)
+    t = np.linspace(0,6.3,n)
+    x = center[0]+rad*np.sin(t)
+    y = center[1]+rad*np.cos(t)
+    return x,y
+
+def draw_circles(ax,n,center,radius,w):
+    if n>0:
+        x,y = circle(center,radius)
+        ax.plot(x+radius, y,color='k')
+        draw_circles(ax,n-1,center,radius*w,w)
+      
+plt.close("all") 
+fig, ax = plt.subplots() 
+draw_circles(ax, 50, [100,0], 100,.9)
+ax.set_aspect(1.0)
+ax.axis('off')
+plt.show()
+
+
+
+#image 3: Binary tree
+def tree(ax,n,d,x,y):
+    if d>=1:
+        ax.plot([n[0],(n[0]-x)],[n[1],(n[1]-y)],color='k')
+        tree(ax,[(n[0]-x),(n[1]-y)],(d-1),(x/2),(y*.8))
+        
+    if d>=1:
+        ax.plot([n[0],(n[0]+x)],[n[1],(n[1]-y)],color='k')
+        tree(ax,[(n[0]+x),(n[1]-y)],(d-1),(x/2),(y*.8))
+
+        
+plt.close("all")
+fig, ax=plt.subplots()
+n=np.array([0,0])
+tree(ax,n,5,800,800)
+ax.axis('on')
+
+#image 4: 5 circles inside one
+def circle2(center,rad):
+    n = int(4*rad*math.pi)
+    t = np.linspace(0,6.3,n)
+    x = center[0]+rad*np.sin(t)
+    y = center[1]+rad*np.cos(t)
+    return x,y
+
+def draw_circles(ax,n,center,radius,w):
+    if n>0:
+        x,y = circle(center,radius)
+        ax.plot(x,y,color='k')
+        draw_circles(ax,n-1,center,radius*w,w)
+      
+plt.close("all") 
+radius=100
+fig, ax = plt.subplots() 
+draw_circles(ax, 1, [100,0], 100,.9)
+draw_circles(ax, 1,[radius/3,0],radius/3,.3)
+draw_circles(ax,1,[100,0],radius/3,.3)
+draw_circles(ax,1,[2*radius-(radius/3),0],radius/3,.3)
+draw_circles(ax,1,[100,2*radius/3],radius/3,.3)
+draw_circles(ax,1,[100,-(2*radius/3)],radius/3,.3)
+ax.set_aspect(1.0)
+ax.axis('off')
+plt.show()
+
